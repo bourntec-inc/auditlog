@@ -21,7 +21,7 @@ public interface FileService {
      		+ "newPayload: "+auditLog.getNewPayload()+"\r\n"
      		+ "recordType: "+auditLog.getRecordType()+"\r\n"
      		+ "recordId: "+auditLog.getRecordId()+"\r\n"
-     		+ "newPayload: "+auditLog.getNewPayload()+"\r\n"
+     		+ "execTime: "+auditLog.getExecTime()+"\r\n"
      		;
      return log;
      

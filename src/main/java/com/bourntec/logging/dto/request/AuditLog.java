@@ -29,7 +29,7 @@ public class AuditLog implements Serializable{
 
 	private String recordId;
 	
-
+	private long execTime;
 	
 	public String getLoggerId() {
 		return loggerId;
@@ -142,5 +142,15 @@ public class AuditLog implements Serializable{
 		AuditLog auditLog = new AuditLog();
 		auditLog = objectMapper.readValue(logMessage, AuditLog.class);
 		return auditLog;
+	}
+
+
+	public long getExecTime() {
+		return execTime;
+	}
+
+
+	public void setExecTime(long execTime) {
+		this.execTime = execTime;
 	}
 }
