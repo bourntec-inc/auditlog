@@ -33,7 +33,7 @@ public class AmazonS3Client {
     private String endpointUrl;
 
     @Value("${s3.bucketName}")
-    private String bucketName;
+    private  String bucketName;
 
     @Value("${s3.accessKeyId}")
     private String accessKeyId;
@@ -71,6 +71,24 @@ public class AmazonS3Client {
             throw new IllegalStateException("Failed to read the file", e);
         }
     }
+	public  void createFolder(String folderName) {
+		if(!s3client.doesObjectExist(bucketName, folderName)) {
+	    // create meta-data for your folder and set content-length to 0
+	    ObjectMetadata metadata = new ObjectMetadata();
+	    metadata.setContentLength(0);
+
+	    // create empty content
+	    InputStream emptyContent = new ByteArrayInputStream(new byte[0]);
+
+	    // create a PutObjectRequest passing the folder name suffixed by /
+	    PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,
+	                folderName , emptyContent, metadata);
+
+	    // send request to S3 to create folder
+	    s3client.putObject(putObjectRequest);
+		}
+	}
+
 	public void createFile( String fileName,String content) {
 	   String finalContent="";
 		if(s3client.doesObjectExist(bucketName, fileName)) {

@@ -26,6 +26,7 @@ public class AuditLog implements Serializable{
 
 	private String newPayload;
 	private String recordType;//module
+	private String reqType;//get,post,put
 
 	private String recordId;
 	
@@ -152,5 +153,15 @@ public class AuditLog implements Serializable{
 
 	public void setExecTime(long execTime) {
 		this.execTime = execTime;
+	}
+
+
+	public String getReqType() {
+		return reqType;
+	}
+
+
+	public void setReqType(String reqType) {
+		this.reqType = reqType;
 	}
 }
