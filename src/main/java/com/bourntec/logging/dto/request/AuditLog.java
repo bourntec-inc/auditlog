@@ -3,35 +3,64 @@ package com.bourntec.logging.dto.request;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 public class AuditLog implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
 
-	private String loggerId;
-
-	private String userId;
-	private String action;
-	private String actionMessage;
-	private String createdDateTime;
-
-	private String payload;
-
-	private String oldPayload;
-
-	private String newPayload;
-	private String recordType;//module
-	private String reqType;//get,post,put
-
-	private String recordId;
+	String loggerId;
+	String userId;
+	String action;
+	String actionMessage;
+	 String createdDateTime;
+	String payload;
+	String oldPayload;
+	String recordType;//module
+	String reqType;//get,post,put
+	String recordId;
+	long execTime;
 	
-	private long execTime;
-	
+
+
+	public AuditLog(String userId,String action,String actionMessage,String payload,
+			String oldPayload,String recordType, String reqType,String recordId,long execTime){
+		if(userId.isEmpty()) {
+			System.out.println("userId is mandiatory for AuditLog.");
+		}
+		if(action.isEmpty()) {
+			System.out.println("action is mandiatory for AuditLog.");
+		}
+		if(payload.isEmpty()) {
+			System.out.println("payload is mandiatory for AuditLog.");
+		}
+		if(recordType.isEmpty()) {
+			System.out.println("recordType(module) is mandiatory for AuditLog.");
+		}
+		if(reqType.isEmpty()) {
+			System.out.println("reqType(GET,POST,PUT,DELETE) is mandiatory for AuditLog.");
+		}
+		if(recordId.isEmpty()) {
+			System.out.println("recordId is mandiatory for AuditLog.");
+		}
+		this.userId=userId;
+		this.action=action;
+		this.payload=payload;
+		this.recordType=recordType;
+		this.reqType=reqType;
+		this.recordId=recordId;
+		this.oldPayload=oldPayload;
+		this.payload=payload;
+		
+		
+		
+	}
+	public AuditLog()
+	{}
+
+
 	public String getLoggerId() {
 		return loggerId;
 	}
@@ -101,17 +130,6 @@ public class AuditLog implements Serializable{
 		this.oldPayload = oldPayload;
 	}
 
-
-	public String getNewPayload() {
-		return newPayload;
-	}
-
-
-	public void setNewPayload(String newPayload) {
-		this.newPayload = newPayload;
-	}
-
-
 	public String getRecordType() {
 		return recordType;
 	}
@@ -136,15 +154,6 @@ public class AuditLog implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-
-	public AuditLog toModel(String logMessage) throws Exception {
-		ObjectMapper objectMapper = new ObjectMapper();
-		AuditLog auditLog = new AuditLog();
-		auditLog = objectMapper.readValue(logMessage, AuditLog.class);
-		return auditLog;
-	}
-
 
 	public long getExecTime() {
 		return execTime;

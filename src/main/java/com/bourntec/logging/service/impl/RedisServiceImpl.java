@@ -1,8 +1,5 @@
 package com.bourntec.logging.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +15,6 @@ public class RedisServiceImpl implements LoggingService {
 	
 	@Override
 	public void log(AuditLog log) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		log.setCreatedDateTime(formatter.format(new Date()));		
 		sender.sendDataToRedisQueue(log);
 	}
-	 public String getValue(){
-	        return "some ddddddddddddddvalue";
-	    }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.bourntec.logging.dto.request.AuditLog;
 import com.bourntec.logging.service.FileService;
 import com.bourntec.logging.service.LoggingService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class RedisReceiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisReceiver.class);
@@ -24,15 +25,18 @@ public class RedisReceiver {
     private FileService fileService;
     public void receiveMessage(String message) {
         LOGGER.info("Received <" + message + ">");
-    	AuditLog auditLogObj = new AuditLog();
+        ObjectMapper obj=new ObjectMapper();
+   // 	AuditLog auditLogObj = new AuditLog(null, null, null, null, null, null, null, null, 0) ;
 		try {
-			auditLogObj = auditLogObj.toModel(message.toString());
+			//auditLogObj = auditLogObj.toModel(message.toString());
+			AuditLog auditLogObj=obj.readValue(message.toString(), AuditLog.class);
+			fileService.persistLog(auditLogObj);
+	        counter.incrementAndGet();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		fileService.persistLog(auditLogObj);
-        counter.incrementAndGet();
+		
     }
 
     public int getCount() {
