@@ -35,45 +35,45 @@ public class S3FileServiceImpl implements FileService{
 		    amazonClient.createFile(logPath+"/"+getFolderPattern(log)+getFileNamePattern(log), str);
 		}
 	}
-   private String getPattern(String patternString,String appender,AuditLog log) {
+   private String getPattern(String patternString,AuditLog log) {
 	   if(!patternString.isEmpty()) {
            	if(patternString!=null && patternString.trim().contains(ApplicationConfig.loggerid)) {
-           		patternString=patternString.replace(ApplicationConfig.loggerid, log.getLoggerId()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.loggerid, log.getLoggerId()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.userId)) {
-           		patternString=patternString.replace(ApplicationConfig.userId, log.getUserId()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.userId, log.getUserId()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.action)) {
-           		patternString=patternString.replace(ApplicationConfig.action, log.getAction()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.action, log.getAction()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.actionMessage)) {
-           		patternString=patternString.replace(ApplicationConfig.actionMessage, log.getActionMessage()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.actionMessage, log.getActionMessage()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.recordType)) {
-           		patternString=patternString.replace(ApplicationConfig.recordType, log.getRecordType()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.recordType, log.getRecordType()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.reqType)) {
-           		patternString=patternString.replace(ApplicationConfig.reqType, log.getReqType()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.reqType, log.getReqType()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.recordId)) {
-           		patternString=patternString.replace(ApplicationConfig.recordId, log.getRecordId()+appender).trim();
+           		patternString=patternString.replace(ApplicationConfig.recordId, log.getRecordId()).trim();
            	}
         	if(patternString!=null && patternString.trim().contains(ApplicationConfig.date)) {
         		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
       		    formatter.setTimeZone(TimeZone.getTimeZone("UTC"));  
       		    Date date = new Date();  
-      		    patternString=patternString.replace(ApplicationConfig.date,formatter.format(date)+appender).trim();
+      		    patternString=patternString.replace(ApplicationConfig.date,formatter.format(date)).trim();
            	}
        }
 	   return patternString;
    }
 	private String getFileNamePattern(AuditLog log) {
-		String fileName=getPattern(fileNamePattern,"_",log);
+		String fileName=getPattern(fileNamePattern,log);
 		fileName=fileName.substring(0, fileName.length() - 1);
          return  fileName;
 	}
 
 	private String getFolderPattern(AuditLog log) {
-	     return  getPattern(folderPattern,"/",log);
+	     return  getPattern(folderPattern,log);
 	}
 }

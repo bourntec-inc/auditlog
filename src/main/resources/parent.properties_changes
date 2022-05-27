@@ -2,5 +2,5 @@
 redis.queue.topic=redis.auditlog
 audit.log.method=s3
 audit.log.path=logs
-audit.log.folderpattern=log.datelog.userId 
-audit.log.filenamepattern=log.userIdlog.recordTypelog.reqTypelog.date
+audit.log.folderpattern=log.date/log.userId
+audit.log.filenamepattern=log.userId_log.recordType_log.reqType_log.date
